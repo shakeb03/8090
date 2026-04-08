@@ -18,8 +18,8 @@ function borderColor(status: StageStatus) {
 
 export default function StagePanel({ label, content, status }: StagePanelProps) {
   return (
-    <div className={`rounded-xl border bg-gray-900 p-5 transition-colors duration-300 ${borderColor(status)}`}>
-      <div className="flex items-center gap-2 mb-4">
+    <div className={`rounded-xl border bg-gray-900 p-5 transition-colors duration-300 flex flex-col ${borderColor(status)}`}>
+      <div className="flex items-center gap-2 mb-4 flex-shrink-0">
         <span className="font-mono text-xs font-semibold uppercase tracking-widest text-gray-400">
           {label}
         </span>
@@ -35,12 +35,14 @@ export default function StagePanel({ label, content, status }: StagePanelProps) 
         )}
       </div>
 
-      <div className="prose prose-invert prose-sm max-w-none prose-headings:text-gray-100 prose-p:text-gray-300 prose-li:text-gray-300">
-        {content ? (
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-        ) : (
-          <p className="text-gray-600 italic m-0">Waiting...</p>
-        )}
+      <div className="overflow-y-auto max-h-[70vh]">
+        <div className="prose prose-invert prose-sm max-w-none prose-headings:text-gray-100 prose-p:text-gray-300 prose-li:text-gray-300">
+          {content ? (
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+          ) : (
+            <p className="text-gray-600 italic m-0">Waiting...</p>
+          )}
+        </div>
       </div>
     </div>
   );

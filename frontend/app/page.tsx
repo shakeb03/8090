@@ -60,8 +60,8 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen py-12 px-4">
-      <div className="max-w-3xl mx-auto flex flex-col gap-8">
+    <main className="min-h-screen py-12 px-6">
+      <div className="max-w-[1600px] mx-auto flex flex-col gap-8">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-gray-100">
             Mini Factory
@@ -75,7 +75,7 @@ export default function Home() {
 
         <PipelineIndicator stageStatus={stageStatus} />
 
-        <div className="flex flex-col gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
           {STAGES.map(({ stage, label }) => (
             <StagePanel
               key={stage}
