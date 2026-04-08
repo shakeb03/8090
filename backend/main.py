@@ -1,7 +1,7 @@
 import json
 import os
 
-from anthropic import Anthropic
+from anthropic import AsyncAnthropic
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,7 +20,7 @@ app.add_middleware(
     allow_headers=["Content-Type"],
 )
 
-client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+client = AsyncAnthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
 PRD_SYSTEM = """You are a senior product manager at a software company.
 
@@ -128,13 +128,13 @@ async def event_stream(user_input: str):
         else:
             messages = stage["messages"]
 
-        with client.messages.stream(
+        async with client.messages.stream(
             model="claude-sonnet-4-20250514",
             max_tokens=2048,
             system=stage["system"],
             messages=messages,
         ) as stream:
-            for text in stream.text_stream:
+            async for text in stream.text_stream:
                 stage_text += text
                 payload = json.dumps({"stage": stage_id, "type": "token", "content": text})
                 yield f"data: {payload}\n\n"
